@@ -1,0 +1,30 @@
+
+
+<p>
+  <strong>Nom:</strong>
+  <%= @produit.nom %>
+</p>
+
+<p >
+  <strong>Description:</strong>
+  <%= @produit.description %>
+</p>
+
+<p>
+  <strong>Prix:</strong>
+  <%= @produit.prix %>
+</p>
+
+<p>
+  <strong>Stock:</strong>
+  <%= @produit.stock %>
+</p>
+
+<p>
+  <strong>Categorie:</strong>
+  <%= @produit.categorie.nom %>
+</p>
+<%if current_user.admin %>
+<%= link_to 'Modifier', edit_produit_path(@produit) %> |
+<% end %>
+<%= link_to 'Retour', produits_path %>

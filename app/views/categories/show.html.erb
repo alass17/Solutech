@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nom:</strong>
+  <%= @category.nom %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @category.description %>
+</p>
+<%if current_user.admin %>
+<%= link_to 'Modifier', edit_category_path(@category) %> |
+<% end %>
+<%= link_to 'Retour', categories_path %>
