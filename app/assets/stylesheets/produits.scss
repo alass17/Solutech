@@ -1,3 +1,85 @@
 // Place all the styles related to the Produits controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.title{
+    font-size:24px
+}
+
+.produit ,.prix{
+    text-align: center;
+}
+
+.image{
+    width: 200px !important; 
+    height: 200px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    padding:0 !important  ;
+    border-radius: 10px;  
+}
+
+.image4{
+    width: 300px ; 
+    height:300px ;
+    margin-left:-50px;
+}
+
+.produit-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: rgba(233, 239, 237, 0.3); /* #E9EFED avec 30 % d'opacité */
+    border-radius: 10px;
+    float: left;
+
+}
+  
+  .produit-card .r2 {
+    margin-top: 10px;
+  }
+  
+  .image img {
+    max-width: 100%;
+  }
+  .addpanier{
+    text-align: center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .small-number-field {
+    width: 50px; /* Ajustez la largeur en conséquence */
+  }
+
+  .colshow{
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 70px !important;
+    border:1px solid beige;
+    box-shadow: #ebe8e8;
+   width: 45% !important;
+  }
+
+  .textes{
+    padding:20px;
+    margin-top:50px;
+    
+  }
+  .textt{
+    text-align: center;
+  }
+  .new{
+    float: right;
+    margin-bottom: 50px;
+    
+  }
+  .nouveau{
+    float: right;
+    justify-content: end;
+    color: white!important;
+  
+  }

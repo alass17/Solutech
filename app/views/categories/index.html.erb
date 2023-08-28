@@ -1,32 +1,42 @@
 <p id="notice"><%= notice %></p>
-
-<h1>Categories</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.nom %></td>
-        <td><%= category.description %></td>
-        <td><%= link_to 'Lire plus', category %></td>
-        <%if current_user.admin %>
-        <td><%= link_to 'Modifier', edit_category_path(category) %></td>
-        <td><%= link_to 'Supprimer', category, method: :delete, data: { confirm: 'Etes vous sûre?' } %></td>
-        <% end %>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-<%if current_user.admin %>
-<%= link_to 'Nouvelle categorie', new_category_path %>
+<div class="new">
+<% if current_user.admin %>
+  <%= link_to 'Nouvelle categorie', new_category_path, class: 'btn btn-primary text-white ' %>
 <% end %>
+</div>
+<div class="container ctout" >
+  <div class="row " >
+    <% @categories.each do |category| %>
+
+      <div class="col-md-4 mx-auto">
+      <%= link_to category_path(category) do%>
+        <div class="card position-relative">
+          <% if category.image.attached? %>
+        
+            <%= image_tag category.image, class: "card-img-top" %>
+          <% end %>
+       
+          
+          <div class="card-img-overlay d-flex flex-column justify-content-end ">
+         
+            <h2 class="card-title mb-0 text-white"><%= category.nom %></h2>
+        
+            <p class="card-text text-white mb-2 "><%= category.description %></p>
+
+
+             <%= link_to 'Voir les produits', products_by_category_category_path(category), class: 'btn btn-primary text-white' %>
+           
+           
+            <% if current_user.admin %>
+              <div class="card-footer mx-auto">
+                <%= link_to 'Modifier', edit_category_path(category), class: 'btn btn-primary text-white' %>
+                <%= link_to 'Supprimer', category, method: :delete, data: { confirm: 'Etes vous sûre?' }, class: 'btn btn-danger text-white' %>
+                </div>
+                <% end %>
+              </div>
+            </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>

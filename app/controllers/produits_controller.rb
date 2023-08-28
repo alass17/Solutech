@@ -4,6 +4,9 @@ class ProduitsController < ApplicationController
   # GET /produits or /produits.json
   def index
     @produits = Produit.all
+
+    @q = Produit.ransack(params[:q])
+    @produits = @q.result(distinct: true)
   end
 
   # GET /produits/1 or /produits/1.json
@@ -57,6 +60,12 @@ class ProduitsController < ApplicationController
     end
   end
 
+# Pour afficher les produits d'une categorie
+# def products_by_category
+#   @category = Categorie.find(params[:category_id])
+#   @produitss = @category.produits
+# end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_produit
@@ -65,6 +74,6 @@ class ProduitsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def produit_params
-      params.require(:produit).permit(:nom, :description, :prix, :stock, :categorie_id)
+      params.require(:produit).permit( :nom, :description, :prix, :stock, :categorie_id, :image)
     end
 end

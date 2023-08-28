@@ -13,6 +13,7 @@
  
 
   <body>
+  <% if current_user %>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Solutech</a>
@@ -22,23 +23,29 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/produits">Produit</a>
+          <a class="nav-link <%= 'active' if current_page?(produits_path) %>" aria-current="page" href="/produits">Produit</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/categories">Categorie</a>
+          <a class="nav-link <%= 'active' if current_page?(categories_path) %>" href="/categories">Categorie</a>
         </li>
-    
+        <% if !current_user.admin %>
+        <li class="nav-item">
+          <a class="nav-link <%= 'active' if current_page?(cart_show_path) %>" href="/cart">Panier</a>
+        </li>
+        <% end %>
       </ul>
      
-      <% if current_user %>
-      <%= link_to 'Se deconnecter', destroy_user_session_path, method: :delete %> 
-      <% end %>
+  
+      <%= link_to 'Se deconnecter', destroy_user_session_path, method: :delete ,class:"btn btn-danger", style:"color:white"%> 
+      
     </div>
     </li>
   </div>
 </nav>
   <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <turbo-frame id="cart"></turbo-frame> <!-- Correspond à l'identifiant "cart" -->
+    <% end %>
     <%= yield %>
   </body>
 </html>

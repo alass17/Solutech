@@ -1,0 +1,13 @@
+
+
+
+<div class ="panier">
+<% if @cart.orderables.count > 0 %>
+<div class="cart">
+<%= render "cart/orderables", cart: @cart %>
+</div>
+    <div class= "total">Total: <%= number_to_currency(@cart.total, unit: "", delimiter: " ", separator: ",", format: "%n %u") %> &euro;</div>
+  <% else %>
+    <p>Your cart is empty</p>
+  <% end %>
+  </div>

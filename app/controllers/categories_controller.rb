@@ -23,10 +23,11 @@ class CategoriesController < ApplicationController
   # POST /categories or /categories.json
   def create
     @category = Categorie.new(category_params)
-    
+    # @category.image = params[:category][:image].original_filename if params[:category] && params[:category][:image]
+  
     respond_to do |format|
       if @category.save
-        format.html { redirect_to category_url(@category), notice: "Categorie créée avec succes." }
+        format.html { redirect_to category_url(@category), notice: "Categorie créée avec succès." }
         format.json { render :show, status: :created, location: @category }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +40,9 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to category_url(@category), notice: "Categorie modifiée avec succes." }
+        # @category.image = params[:category][:image].original_filename if params[:category] && params[:category][:image]
+  
+        format.html { redirect_to category_url(@category), notice: "Categorie modifiée avec succès." }
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,14 +61,21 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def products_by_category
+    @category = Categorie.find(params[:id])
+    @products = @category.produits
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
       @category = Categorie.find(params[:id])
     end
 
+   
+
     # Only allow a list of trusted parameters through.
     def category_params
-      params.require(:categorie).permit(:nom, :description)
+      params.require(:categorie).permit(:nom, :description, :image )
     end
 end
