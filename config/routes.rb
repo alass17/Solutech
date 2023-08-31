@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   post 'cart/remove'
   get '/cart', to: 'cart#show', as: 'cart_show'
   devise_for :users
-  root 'pages#home'
+   root 'pages#home'
+
   resources :categories
   resources :categories, only: [] do
     member do

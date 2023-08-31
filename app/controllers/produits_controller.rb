@@ -25,17 +25,23 @@ class ProduitsController < ApplicationController
   # POST /produits or /produits.json
   def create
     @produit = Produit.new(produit_params)
-   
+
     respond_to do |format|
-      if @produit.save
-        format.html { redirect_to produit_url(@produit), notice: "Produit creé avec succes." }
+      if current_user.admin? && @produit.save
+        format.html { redirect_to produit_url(@produit), notice: "Produit créé avec succès." }
         format.json { render :show, status: :created, location: @produit }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @produit.errors, status: :unprocessable_entity }
+        if current_user.admin?
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @produit.errors, status: :unprocessable_entity }
+        else
+          format.html { redirect_to root_path, alert: "Vous n'êtes pas autorisé à créer des produits." }
+          format.json { render json: { error: "Permission denied" }, status: :forbidden }
+        end
       end
     end
   end
+  
 
   # PATCH/PUT /produits/1 or /produits/1.json
   def update
