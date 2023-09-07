@@ -1,47 +1,97 @@
-<div class="container">
-<div class="nw">
-<% if current_user.admin %>
-  <%= link_to 'Nouveau produit', new_produit_path , class:"btn btn-primary  nouveau"%>
-<% end %>
-</div>
-
-<%= search_form_for @q do |f| %>
-<%= f.search_field :nom_cont %>
-<%= f.submit %>
-<% end %>
-
-<h1>Produits</h1>
-</div>
-</div>
-
-<div class="container toutc">
-  <div class="row justify-content-center">
-    <% @produits.each do |produit| %>
-      <div class="col-md-4">
-        <div class="card mb-3 mx-auto d-fley jutify-content-center" style="max-width: 245px;">
-          <%= link_to produit_path(produit) do %>
-            <%= image_tag produit.image, class: "card-img-top", style: "object-fit: cover; height: 246px;" %>
-          <% end %>
-          <div class="card-body text-center">
-            <h5 class="card-title textt"><%= produit.nom %></h5>
-            <p class="card-text textt"><%= number_to_currency(produit.prix, unit: "", delimiter: " ", separator: ",", format: "%n %u") %> &euro;</p>
-            <div class="addpanier">
-              <% if !current_user.admin %>
-                <%= form_with(url: cart_add_path) do |f| %>
-                  <%= f.hidden_field :id, value: produit.id %>
-                  <%= f.number_field :quantity, value: 0, min: 1 , class: "small-number-field" %>
-                  <%= f.submit "Add To Cart", class: "btn btn-primary" %>
-                <% end %>
-              <% end %>
-            </div>
-            <%#= link_to 'Lire plus', produit_path(produit), class: 'btn btn-primary' #%>
-            <% if current_user.admin %>
-              <%= link_to 'Modifier', edit_produit_path(produit) %> | 
-              <%= link_to 'Supprimer', produit, method: :delete, data: { confirm: 'Etes vous sûre?' } %>
-            <% end %>
-          </div>
+<% if current_user %>
+  <div class="container">
+    <div class="nw">
+      <% if current_user.admin %>
+        <%= link_to 'Nouveau produit', new_produit_path , class: "btn btn-primary nouveau" %>
+      <% end %>
+    </div>
+    <h1 style="margin-left:50px !important">Nouveautés</h1>
+    <div class="col-md-6 mx-auto mb-3">
+    <%= search_form_for @q, html: { class: "form-inline" } do |f| %>
+      <div class="input-group">
+        <%= f.search_field :nom_cont, class: "form-control" %>
+        <div class="input-group-append">
+          <%= f.submit "Rechercher", class: "btn btn-primary" %>
         </div>
       </div>
     <% end %>
   </div>
+
+    
+  </div>
+
+  <div class="container toutc">
+    <div class="row justify-content-center">
+      <% @produits.each do |produit| %>
+        <div class="col-md-4">
+          <div class="card mb-3 mx-auto d-flex justify-content-center" style="max-width: 245px;">
+            <%= link_to produit_path(produit) do %>
+              <%= image_tag produit.image, class: "card-img-top", style: "object-fit: cover; height: 246px;" %>
+            <% end %>
+            <div class="card-body text-center">
+              <h5 class="card-title textt"><%= produit.nom %></h5>
+              <p class="card-text textt"><%= number_to_currency(produit.prix, unit: "", delimiter: " ", separator: ",", format: "%n %u") %> &euro;</p>
+              <div class="addpanier">
+                <% if !current_user.admin %>
+                  <%= form_with(url: cart_add_path) do |f| %>
+                    <%= f.hidden_field :id, value: produit.id %>
+                    <%= f.number_field :quantity, value: 0, min: 1 , class: "small-number-field" %>
+                    <%= f.submit "Add To Cart", class: "btn btn-primary bb" %>
+                  <% end %>
+                <% end %>
+              </div>
+              <%#= link_to 'Lire plus', produit_path(produit), class: 'btn btn-primary' #%>
+              <% if current_user.admin %>
+                <%= link_to 'Modifier', edit_produit_path(produit) %> | 
+                <%= link_to 'Supprimer', produit, method: :delete, data: { confirm: 'Etes vous sûre?' } %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+<% else %>
+<div class="container mt-4">
+<h1 style="text-align:center ;margin-left:auto;margin-right:auto;margin-bottom:30px !important">Bienvenue sur Solutech</h1>
+<div class="row">
+  <div class="col-md-4">
+    <div class="card h-100" >
+      <%= image_tag("telechrgements.jpg", alt: "Example Image ", class: "card-img-top img-fluid") %>
+
+      <div class="card-body">
+        <h5 class="card-title">Découvrez notre large gamme</h5>
+        <p class="card-text">Parcourez notre collection de matériel et d'outils informatiques de qualité pour tous vos besoins.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+    <%= image_tag("premium_photo-1661420059005-46f59e62e478.jpg", alt: "Example Image" , class: "card-img-top img-fluid") %>
+
+      <div class="card-body">
+        <h5 class="card-title">Trouvez les meilleures offres</h5>
+        <p class="card-text">Profitez de nos offres spéciales et de nos réductions pour acquérir les outils dont vous avez besoin à des prix avantageux.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+    <%= image_tag("photo-1526948531399-320e7e40f0ca.jpg", alt: "Example Image" , class: "card-img-top img-fluid") %>
+      <div class="card-body">
+        <h5 class="card-title">Inscrivez-vous dès maintenant</h5>
+        <p class="card-text">Rejoignez la communauté Solutech en vous inscrivant et bénéficiez d'un accès complet à notre catalogue.</p>
+        <%= link_to 'Inscrire', new_user_registration_path, class: "btn btn-primary text-white" %>
+      </div>
+    </div>
+  </div>
 </div>
+</div>
+
+<div class="text-center mt-2">
+<h2>Vous avez déjà un compte ?</h2>
+<%= link_to 'Se connecter', new_user_session_path, class: "btn btn-secondary mx-2 text-white mb-3" %>
+</div>
+
+<% end %>

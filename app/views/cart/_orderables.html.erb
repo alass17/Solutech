@@ -1,25 +1,30 @@
-
-<% @cart.orderables.each do |orderable| %>
-  <% produit = orderable.produit %>
-  <div id="<%= "cart-#{produit.id}" %>">
-    <div style="display:flex;justify-content:space-between;margin: 0em 5em;margin-bottom:10px">
-      <strong>Name:</strong>
-      <%= produit.nom %>
-      <strong>Description:</strong>
-      <%= produit.description %>
-      <strong>Price:</strong>
-      <%= produit.prix %>
-      <%= form_with(url: cart_add_path) do |f| %>
-        <%= f.hidden_field :id, value: produit.id %>
-        <%= f.number_field :quantity, value: orderable.quantity, min: 0 %>
-        <%= f.submit "Add To Cart" %>
-      <% end %>
-      <%= form_with(url: cart_remove_path) do |f| %>
-        <%= f.hidden_field :id, value: orderable.id %>
-        <%= f.submit "X" %>
-      <% end %>
-      <strong>Total:</strong>
-      <%= orderable.total %>
+<div class="container">
+  <% @cart.orderables.each do |orderable| %>
+    <% produit = orderable.produit %>
+    <div id="<%= "cart-#{produit.id}" %>" class="card mb-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h5 class="card-title"><%= produit.nom %></h5>
+            <p class="card-text"><%= produit.description %></p>
+          </div>
+          <div class="col-md-3">
+            <p class="card-text"><strong>Price:</strong> <%= produit.prix %></p>
+            <%= form_with(url: cart_add_path) do |f| %>
+              <%= f.hidden_field :id, value: produit.id %>
+              <%= f.number_field :quantity, value: orderable.quantity, min: 0, class: "form-control" %>
+              <%= f.submit "Update", class: "btn btn-primary mt-2" %>
+            <% end %>
+          </div>
+          <div class="col-md-3 text-right">
+            <p class="card-text"><strong>Total:</strong> <%= orderable.total %></p>
+            <%= form_with(url: cart_remove_path) do |f| %>
+              <%= f.hidden_field :id, value: orderable.id %>
+              <%= f.submit "Remove", class: "btn btn-danger" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

@@ -1,11 +1,13 @@
 Rails.application.routes.draw do 
   
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # get 'cart', to: 'cart#show'
   post 'cart/add'
   post 'cart/remove'
   get '/cart', to: 'cart#show', as: 'cart_show'
   devise_for :users
-   root 'pages#home'
+  resources :users, controllers: { sessions: 'sessions' }
+  #  root 'pages#home'
 
   resources :categories
   resources :categories, only: [] do
@@ -17,7 +19,13 @@ Rails.application.routes.draw do
   resources :carts
 
   resources :produits
-  # root 'produits#index'
+  
+  root 'produits#index'
+
+  devise_scope :user do
+    post 'users/guest_sign_in', to: 'users/sessions#new_guest', as: :guest_sign_in
+    post 'users/admin_guest_sign_in', to: 'users/sessions#new_admin_guest', as: :admin_guest_sign_in
+  end
 
   #  get 'categories/:category_id/products', to: 'products#products_by_category', as: 'products_by_category'  
   #  resources :categories do

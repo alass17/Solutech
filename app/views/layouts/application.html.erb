@@ -13,26 +13,30 @@
  
 
   <body>
-  <% if current_user %>
+
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Solutech</a>
+    <a class="navbar-brand text-white" href="#">Solutech</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0 text-white">
         <li class="nav-item">
-          <a class="nav-link <%= 'active' if current_page?(produits_path) %>" aria-current="page" href="/produits">Produit</a>
+          <a class="nav-link text-white <%= 'active' if current_page?(produits_path) %>" aria-current="page" href="/produits">Produit</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <%= 'active' if current_page?(categories_path) %>" href="/categories">Categorie</a>
+          <a class="nav-link text-white <%= 'active' if current_page?(categories_path) %>" href="/categories">Categorie</a>
         </li>
-        <% if !current_user.admin %>
-        <li class="nav-item">
-          <a class="nav-link <%= 'active' if current_page?(cart_show_path) %>" href="/cart">Panier</a>
-        </li>
+        <% if !current_user %>
+        <li class="nav-item"><%= link_to "Utilisateur invité", guest_sign_in_path, method: :post, class: "nav-link text-white" %>
+        <li class="nav-item"><%= link_to "Admin invité", admin_guest_sign_in_path, method: :post, class: "nav-link text-white" %>
         <% end %>
+        
+        <li class="nav-item">
+          <a class="nav-link text-white <%= 'active' if current_page?(cart_show_path) %>" href="/cart">Panier</a>
+        </li>
+        
       </ul>
      
   
@@ -44,8 +48,8 @@
 </nav>
   <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    <turbo-frame id="cart"></turbo-frame> <!-- Correspond à l'identifiant "cart" -->
-    <% end %>
+    <turbo-frame id="cart"></turbo-frame>
+   
     <%= yield %>
   </body>
 </html>

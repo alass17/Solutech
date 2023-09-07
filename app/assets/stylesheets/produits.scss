@@ -49,9 +49,12 @@
     margin-right: auto;
   }
   .small-number-field {
-    width: 50px; /* Ajustez la largeur en conséquence */
+    width: 50px; 
   }
 
+  .bb{
+    margin-top: -7px;
+  }
   .colshow{
     display: grid;
     grid-template-columns: auto auto;
